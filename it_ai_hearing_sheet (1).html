@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT・AI活用ヒアリングシート</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Meiryo, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        .download-section {
+            padding: 30px 40px;
+            background: #f8f9fa;
+            border-bottom: 3px solid #e9ecef;
+            text-align: center;
+        }
+        .btn-download {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 5px;
+        }
+        .btn-download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .content {
+            padding: 40px;
+        }
+        .section {
+            margin-bottom: 40px;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #764ba2;
+        }
+        .question {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        .question h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        .question-note {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        .answer-area {
+            margin-top: 15px;
+        }
+        .answer-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 100px;
+        }
+        .answer-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .example {
+            background: #fff3cd;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+        .checklist li {
+            padding: 10px;
+            margin: 5px 0;
+            background: white;
+            border-radius: 5px;
+            border-left: 3px solid #28a745;
+        }
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 IT・AI活用ヒアリングシート</h1>
+            <p>お客様の理想を実現するための第一歩</p>
+        </div>
+
+        <div class="download-section">
+            <button class="btn-download" onclick="downloadExcel()">
+                📥 Excelでダウンロード
+            </button>
+            <button class="btn-download" onclick="printSheet()">
+                🖨️ 印刷用PDF
+            </button>
+        </div>
+
+        <div class="content">
+            <!-- セクション1: 基本情報 -->
+            <div class="section">
+                <h2>📋 1. 基本情報</h2>
+                
+                <div class="question">
+                    <h3>会社名・部署名</h3>
+                    <input type="text" class="answer-input" id="company" style="min-height:50px;" placeholder="例:株式会社ABC / マーケティング部">
+                </div>
+
+                <div class="question">
+                    <h3>ご担当者様</h3>
+                    <input type="text" class="answer-input" id="contact" style="min-height:50px;" placeholder="例:山田太郎 / 部長">
+                </div>
+
+                <div class="question">
+                    <h3>業種・事業内容</h3>
+                    <textarea class="answer-input" id="industry" placeholder="例:製造業 / 自動車部品の製造・販売"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>従業員数規模</h3>
+                    <div class="answer-area">
+                        <label><input type="radio" name="employees" value="10名未満"> 10名未満</label><br>
+                        <label><input type="radio" name="employees" value="10-50名"> 10-50名</label><br>
+                        <label><input type="radio" name="employees" value="50-100名"> 50-100名</label><br>
+                        <label><input type="radio" name="employees" value="100-500名"> 100-500名</label><br>
+                        <label><input type="radio" name="employees" value="500名以上"> 500名以上</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション2: 理想のゴール -->
+            <div class="section">
+                <h2>🌟 2. 理想のゴール(What You Want)</h2>
+                
+                <div class="info-box">
+                    <strong>💡 このセクションが最重要です!</strong><br>
+                    「どうなりたいか」「何を実現したいか」を具体的に教えてください。
+                </div>
+
+                <div class="question">
+                    <h3>Q1. 最終的に実現したい理想の状態は?</h3>
+                    <p class="question-note">3年後、5年後にどうなっていたいですか?</p>
+                    <textarea class="answer-input" id="ideal_state" placeholder="例:営業活動を完全自動化し、営業担当は提案に集中できる環境にしたい"></textarea>
+                    <div class="example">
+                        <strong>📝 回答例:</strong>
+                        <ul>
+                            <li>・顧客からの問い合わせに24時間即座に対応できる体制を作りたい</li>
+                            <li>・社員が単純作業から解放され、創造的な仕事に集中できるようにしたい</li>
+                            <li>・データを活用して売上を30%向上させたい</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>Q2. なぜその理想を実現したいのですか?(Why)</h3>
+                    <p class="question-note">背景や動機を教えてください</p>
+                    <textarea class="answer-input" id="why" placeholder="例:人手不足が深刻で、現状の体制では事業拡大が困難だから"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>Q3. その理想が実現したら、どんな変化がありますか?</h3>
+                    <p class="question-note">具体的な成果やメリットを教えてください</p>
+                    <textarea class="answer-input" id="benefits" placeholder="例:残業時間が月平均50時間から10時間に削減される"></textarea>
+                    <div class="example">
+                        <strong>📝 測定可能な指標例:</strong>
+                        <ul>
+                            <li>・売上: ◯◯円 → ◯◯円(◯%増)</li>
+                            <li>・作業時間: ◯時間 → ◯時間(◯%削減)</li>
+                            <li>・顧客満足度: ◯点 → ◯点</li>
+                            <li>・エラー率: ◯% → ◯%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション3: 現状の課題 -->
+            <div class="section">
+                <h2>📊 3. 現状の課題(Current Issues)</h2>
+
+                <div class="question">
+                    <h3>Q4. 現在困っていること・課題は何ですか?</h3>
+                    <p class="question-note">複数ある場合は、すべて教えてください</p>
+                    <textarea class="answer-input" id="issues" placeholder="例:・データ入力に毎日2時間かかっている&#10;・在庫管理が手作業で、ミスが多発している&#10;・顧客情報が散在していて、必要な時に探せない"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>Q5. その課題の優先順位は?</h3>
+                    <table id="priority-table">
+                        <thead>
+                            <tr>
+                                <th>課題</th>
+                                <th>緊急度</th>
+                                <th>重要度</th>
+                                <th>影響範囲</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="priority-issue" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="課題1"></td>
+                                <td>
+                                    <select class="priority-urgency" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>高</option>
+                                        <option>中</option>
+                                        <option>低</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="priority-importance" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>高</option>
+                                        <option>中</option>
+                                        <option>低</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="priority-scope" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>全社</option>
+                                        <option>部署</option>
+                                        <option>個人</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="priority-issue" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="課題2"></td>
+                                <td>
+                                    <select class="priority-urgency" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>高</option>
+                                        <option>中</option>
+                                        <option>低</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="priority-importance" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>高</option>
+                                        <option>中</option>
+                                        <option>低</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="priority-scope" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>全社</option>
+                                        <option>部署</option>
+                                        <option>個人</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="priority-issue" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="課題3"></td>
+                                <td>
+                                    <select class="priority-urgency" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>高</option>
+                                        <option>中</option>
+                                        <option>低</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="priority-importance" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>高</option>
+                                        <option>中</option>
+                                        <option>低</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="priority-scope" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                                        <option>全社</option>
+                                        <option>部署</option>
+                                        <option>個人</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="question">
+                    <h3>Q6. その課題によって、どんな損失が発生していますか?</h3>
+                    <p class="question-note">時間・コスト・機会損失など</p>
+                    <textarea class="answer-input" id="losses" placeholder="例:・手作業に月間100時間(人件費換算で約30万円)&#10;・ミスによる顧客クレーム月5件(信頼損失)&#10;・営業機会の10%を逃している(月間売上500万円の損失)"></textarea>
+                </div>
+            </div>
+
+            <!-- セクション4: 業務プロセス -->
+            <div class="section">
+                <h2>⚙️ 4. 現在の業務プロセス</h2>
+
+                <div class="question">
+                    <h3>Q7. IT化・AI化したい業務を教えてください</h3>
+                    <p class="question-note">複数選択可</p>
+                    <ul class="checklist">
+                        <li><input type="checkbox" class="process-check" value="営業・マーケティング"> 営業・マーケティング</li>
+                        <li><input type="checkbox" class="process-check" value="カスタマーサポート・問い合わせ対応"> カスタマーサポート・問い合わせ対応</li>
+                        <li><input type="checkbox" class="process-check" value="データ入力・集計"> データ入力・集計</li>
+                        <li><input type="checkbox" class="process-check" value="在庫管理・発注"> 在庫管理・発注</li>
+                        <li><input type="checkbox" class="process-check" value="経理・会計"> 経理・会計</li>
+                        <li><input type="checkbox" class="process-check" value="人事・労務管理"> 人事・労務管理</li>
+                        <li><input type="checkbox" class="process-check" value="製造・品質管理"> 製造・品質管理</li>
+                        <li><input type="checkbox" class="process-check" value="文書作成・管理"> 文書作成・管理</li>
+                        <li><input type="checkbox" class="process-check" value="スケジュール管理"> スケジュール管理</li>
+                        <li><input type="checkbox" class="process-check" value="その他"> その他: <input type="text" id="process-other" style="width:300px; padding:5px; border:1px solid #ddd; border-radius:4px;"></li>
+                    </ul>
+                </div>
+
+                <div class="question">
+                    <h3>Q8. その業務の現在のフローを教えてください</h3>
+                    <p class="question-note">誰が、何を、どのように行っているか</p>
+                    <textarea class="answer-input" id="workflow" placeholder="例:【注文受付業務】&#10;1. 顧客からメールで注文を受信&#10;2. 担当者が手作業でExcelに転記(10分/件)&#10;3. 在庫確認のため倉庫に電話(5分/件)&#10;4. 発注書をWordで作成(15分/件)&#10;5. 上司の承認を紙で取得(半日)&#10;6. 顧客にメールで返信"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>Q9. その業務の頻度と処理量は?</h3>
+                    <textarea class="answer-input" id="frequency" placeholder="例:・1日あたり20件&#10;・月間400件&#10;・繁忙期は1.5倍"></textarea>
+                </div>
+            </div>
+
+            <!-- セクション5: IT・AIへの期待 -->
+            <div class="section">
+                <h2>💡 5. IT・AIへの期待</h2>
+
+                <div class="question">
+                    <h3>Q10. IT・AIで自動化したいことは?</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" class="automation-check" value="データ入力の自動化"> データ入力の自動化</li>
+                        <li><input type="checkbox" class="automation-check" value="レポート作成の自動化"> レポート作成の自動化</li>
+                        <li><input type="checkbox" class="automation-check" value="問い合わせ対応の自動化(チャットボット)"> 問い合わせ対応の自動化(チャットボット)</li>
+                        <li><input type="checkbox" class="automation-check" value="在庫の自動発注"> 在庫の自動発注</li>
+                        <li><input type="checkbox" class="automation-check" value="顧客分析・予測"> 顧客分析・予測</li>
+                        <li><input type="checkbox" class="automation-check" value="文書の自動分類・検索"> 文書の自動分類・検索</li>
+                        <li><input type="checkbox" class="automation-check" value="画像・動画の自動認識"> 画像・動画の自動認識</li>
+                        <li><input type="checkbox" class="automation-check" value="スケジュール調整の自動化"> スケジュール調整の自動化</li>
+                        <li><input type="checkbox" class="automation-check" value="異常検知・アラート"> 異常検知・アラート</li>
+                        <li><input type="checkbox" class="automation-check" value="その他"> その他: <input type="text" id="automation-other" style="width:300px; padding:5px; border:1px solid #ddd; border-radius:4px;"></li>
+                    </ul>
+                </div>
+
+                <div class="question">
+                    <h3>Q11. どのくらいの効果を期待していますか?</h3>
+                    <table id="effect-table">
+                        <thead>
+                            <tr>
+                                <th>項目</th>
+                                <th>現状</th>
+                                <th>目標</th>
+                                <th>期待される削減率</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>作業時間</td>
+                                <td><input type="text" class="effect-current" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="例:100時間/月"></td>
+                                <td><input type="text" class="effect-target" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="例:20時間/月"></td>
+                                <td><input type="text" class="effect-reduction" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="80%削減"></td>
+                            </tr>
+                            <tr>
+                                <td>コスト</td>
+                                <td><input type="text" class="effect-current" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="例:50万円/月"></td>
+                                <td><input type="text" class="effect-target" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="例:20万円/月"></td>
+                                <td><input type="text" class="effect-reduction" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="60%削減"></td>
+                            </tr>
+                            <tr>
+                                <td>エラー率</td>
+                                <td><input type="text" class="effect-current" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="例:5%"></td>
+                                <td><input type="text" class="effect-target" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="例:0.5%"></td>
+                                <td><input type="text" class="effect-reduction" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;" placeholder="90%削減"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- セクション6: 現状のIT環境 -->
+            <div class="section">
+                <h2>🖥️ 6. 現状のIT環境</h2>
+
+                <div class="question">
+                    <h3>Q12. 現在使用しているシステム・ツールは?</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" class="system-check" value="Microsoft 365"> Microsoft 365 (Excel, Word, PowerPoint等)</li>
+                        <li><input type="checkbox" class="system-check" value="Google Workspace"> Google Workspace (Gmail, Spreadsheet等)</li>
+                        <li><input type="checkbox" class="system-check" value="CRM"> CRM (顧客管理システム)</li>
+                        <li><input type="checkbox" class="system-check" value="SFA"> SFA (営業支援システム)</li>
+                        <li><input type="checkbox" class="system-check" value="ERP"> ERP (統合基幹業務システム)</li>
+                        <li><input type="checkbox" class="system-check" value="会計ソフト"> 会計ソフト</li>
+                        <li><input type="checkbox" class="system-check" value="チャットツール"> チャットツール (Slack, Teams等)</li>
+                        <li><input type="checkbox" class="system-check" value="プロジェクト管理ツール"> プロジェクト管理ツール</li>
+                        <li><input type="checkbox" class="system-check" value="自社開発システム"> 自社開発システム</li>
+                        <li><input type="checkbox" class="system-check" value="その他"> その他: <input type="text" id="system-other" style="width:300px; padding:5px; border:1px solid #ddd; border-radius:4px;"></li>
+                    </ul>
+                </div>
+
+                <div class="question">
+                    <h3>Q13. IT・AIに関する社内のスキルレベルは?</h3>
+                    <div class="answer-area">
+                        <label><input type="radio" name="skill" value="高い(専任のIT担当者がいる)"> 高い(専任のIT担当者がいる)</label><br>
+                        <label><input type="radio" name="skill" value="中程度(Excel等は使いこなせる)"> 中程度(Excel等は使いこなせる)</label><br>
+                        <label><input type="radio" name="skill" value="低い(基本的なPC操作のみ)"> 低い(基本的なPC操作のみ)</label><br>
+                        <label><input type="radio" name="skill" value="ほとんどない(紙ベースの業務が主)"> ほとんどない(紙ベースの業務が主)</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>Q14. IT投資の予算感は?</h3>
+                    <div class="answer-area">
+                        <label><input type="radio" name="budget" value="50万円未満"> 50万円未満</label><br>
+                        <label><input type="radio" name="budget" value="50万円〜100万円"> 50万円〜100万円</label><br>
+                        <label><input type="radio" name="budget" value="100万円〜300万円"> 100万円〜300万円</label><br>
+                        <label><input type="radio" name="budget" value="300万円〜500万円"> 300万円〜500万円</label><br>
+                        <label><input type="radio" name="budget" value="500万円〜1000万円"> 500万円〜1000万円</label><br>
+                        <label><input type="radio" name="budget" value="1000万円以上"> 1000万円以上</label><br>
+                        <label><input type="radio" name="budget" value="未定(効果次第で検討)"> 未定(効果次第で検討)</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- セクション7: プロジェクト推進 -->
+            <div class="section">
+                <h2>🚀 7. プロジェクト推進について</h2>
+
+                <div class="question">
+                    <h3>Q15. いつまでに実現したいですか?</h3>
+                    <div class="answer-area">
+                        <label><input type="radio" name="timeline" value="1ヶ月以内"> 1ヶ月以内</label><br>
+                        <label><input type="radio" name="timeline" value="3ヶ月以内"> 3ヶ月以内</label><br>
+                        <label><input type="radio" name="timeline" value="6ヶ月以内"> 6ヶ月以内</label><br>
+                        <label><input type="radio" name="timeline" value="1年以内"> 1年以内</label><br>
+                        <label><input type="radio" name="timeline" value="1年以上"> 1年以上</label><br>
+                        <label><input type="radio" name="timeline" value="特に決まっていない"> 特に決まっていない</label>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <h3>Q16. 社内の推進体制は?</h3>
+                    <textarea class="answer-input" id="team" placeholder="例:・プロジェクトリーダー:部長(山田)&#10;・メンバー:課長2名、担当者3名&#10;・決裁者:社長&#10;・稼働:週1回ミーティング"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>Q17. 懸念事項はありますか?</h3>
+                    <ul class="checklist">
+                        <li><input type="checkbox" class="concern-check" value="社員の抵抗・反発"> 社員の抵抗・反発</li>
+                        <li><input type="checkbox" class="concern-check" value="既存システムとの連携"> 既存システムとの連携</li>
+                        <li><input type="checkbox" class="concern-check" value="セキュリティ"> セキュリティ</li>
+                        <li><input type="checkbox" class="concern-check" value="コスト"> コスト</li>
+                        <li><input type="checkbox" class="concern-check" value="運用・保守"> 運用・保守</li>
+                        <li><input type="checkbox" class="concern-check" value="効果が出るか不安"> 効果が出るか不安</li>
+                        <li><input type="checkbox" class="concern-check" value="トラブル時の対応"> トラブル時の対応</li>
+                        <li><input type="checkbox" class="concern-check" value="その他"> その他: <input type="text" id="concern-other" style="width:300px; padding:5px; border:1px solid #ddd; border-radius:4px;"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- セクション8: その他 -->
+            <div class="section">
+                <h2>📝 8. その他</h2>
+
+                <div class="question">
+                    <h3>Q18. すでに検討しているツール・サービスはありますか?</h3>
+                    <textarea class="answer-input" id="considering" placeholder="例:ChatGPT、RPA(UiPath)、クラウド会計ソフト など"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>Q19. 成功事例を見たい業種・業務はありますか?</h3>
+                    <textarea class="answer-input" id="case_studies" placeholder="例:同業他社の事例、製造業での在庫管理AI事例 など"></textarea>
+                </div>
+
+                <div class="question">
+                    <h3>Q20. その他、ご要望・ご質問があれば自由にお書きください</h3>
+                    <textarea class="answer-input" id="other_comments"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function getCheckedValues(className) {
+            const checkboxes = document.querySelectorAll('.' + className + ':checked');
+            return Array.from(checkboxes).map(cb => cb.value).join(', ');
+        }
+
+        function getRadioValue(name) {
+            const radio = document.querySelector('input[name="' + name + '"]:checked');
+            return radio ? radio.value : '';
+        }
+
+        function downloadExcel() {
+            // データ収集
+            const data = [];
+            
+            // セクション1: 基本情報
+            data.push(['セクション', '質問', '回答']);
+            data.push(['1. 基本情報', '会社名・部署名', document.getElementById('company').value]);
+            data.push(['', 'ご担当者様', document.getElementById('contact').value]);
+            data.push(['', '業種・事業内容', document.getElementById('industry').value]);
+            data.push(['', '従業員数規模', getRadioValue('employees')]);
+            data.push([]);
+
+            // セクション2: 理想のゴール
+            data.push(['2. 理想のゴール', 'Q1. 最終的に実現したい理想の状態は?', document.getElementById('ideal_state').value]);
+            data.push(['', 'Q2. なぜその理想を実現したいのですか?', document.getElementById('why').value]);
+            data.push(['', 'Q3. その理想が実現したら、どんな変化がありますか?', document.getElementById('benefits').value]);
+            data.push([]);
+
+            // セクション3: 現状の課題
+            data.push(['3. 現状の課題', 'Q4. 現在困っていること・課題は何ですか?', document.getElementById('issues').value]);
+            
+            // 優先順位テーブル
+            const priorityIssues = document.querySelectorAll('.priority-issue');
+            const priorityUrgency = document.querySelectorAll('.priority-urgency');
+            const priorityImportance = document.querySelectorAll('.priority-importance');
+            const priorityScope = document.querySelectorAll('.priority-scope');
+            
+            data.push(['', 'Q5. その課題の優先順位は?', '']);
+            data.push(['', '課題', '緊急度', '重要度', '影響範囲']);
+            for (let i = 0; i < priorityIssues.length; i++) {
+                if (priorityIssues[i].value) {
+                    data.push(['', priorityIssues[i].value, priorityUrgency[i].value, priorityImportance[i].value, priorityScope[i].value]);
+                }
+            }
+            
+            data.push(['', 'Q6. その課題によって、どんな損失が発生していますか?', document.getElementById('losses').value]);
+            data.push([]);
+
+            // セクション4: 業務プロセス
+            data.push(['4. 現在の業務プロセス', 'Q7. IT化・AI化したい業務', getCheckedValues('process-check')]);
+            const processOther = document.getElementById('process-other').value;
+            if (processOther) {
+                data.push(['', 'その他の業務', processOther]);
+            }
+            data.push(['', 'Q8. その業務の現在のフローを教えてください', document.getElementById('workflow').value]);
+            data.push(['', 'Q9. その業務の頻度と処理量は?', document.getElementById('frequency').value]);
+            data.push([]);
+
+            // セクション5: IT・AIへの期待
+            data.push(['5. IT・AIへの期待', 'Q10. IT・AIで自動化したいこと', getCheckedValues('automation-check')]);
+            const automationOther = document.getElementById('automation-other').value;
+            if (automationOther) {
+                data.push(['', 'その他の自動化', automationOther]);
+            }
+            
+            // 効果テーブル
+            const effectCurrent = document.querySelectorAll('.effect-current');
+            const effectTarget = document.querySelectorAll('.effect-target');
+            const effectReduction = document.querySelectorAll('.effect-reduction');
+            const effectItems = ['作業時間', 'コスト', 'エラー率'];
+            
+            data.push(['', 'Q11. どのくらいの効果を期待していますか?', '']);
+            data.push(['', '項目', '現状', '目標', '期待される削減率']);
+            for (let i = 0; i < effectItems.length; i++) {
+                data.push(['', effectItems[i], effectCurrent[i].value, effectTarget[i].value, effectReduction[i].value]);
+            }
+            data.push([]);
+
+            // セクション6: 現状のIT環境
+            data.push(['6. 現状のIT環境', 'Q12. 現在使用しているシステム・ツール', getCheckedValues('system-check')]);
+            const systemOther = document.getElementById('system-other').value;
+            if (systemOther) {
+                data.push(['', 'その他のシステム', systemOther]);
+            }
+            data.push(['', 'Q13. IT・AIに関する社内のスキルレベル', getRadioValue('skill')]);
+            data.push(['', 'Q14. IT投資の予算感', getRadioValue('budget')]);
+            data.push([]);
+
+            // セクション7: プロジェクト推進
+            data.push(['7. プロジェクト推進について', 'Q15. いつまでに実現したいですか?', getRadioValue('timeline')]);
+            data.push(['', 'Q16. 社内の推進体制は?', document.getElementById('team').value]);
+            data.push(['', 'Q17. 懸念事項', getCheckedValues('concern-check')]);
+            const concernOther = document.getElementById('concern-other').value;
+            if (concernOther) {
+                data.push(['', 'その他の懸念事項', concernOther]);
+            }
+            data.push([]);
+
+            // セクション8: その他
+            data.push(['8. その他', 'Q18. すでに検討しているツール・サービス', document.getElementById('considering').value]);
+            data.push(['', 'Q19. 成功事例を見たい業種・業務', document.getElementById('case_studies').value]);
+            data.push(['', 'Q20. その他、ご要望・ご質問', document.getElementById('other_comments').value]);
+
+            // Excelファイル作成
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(data);
+            
+            // 列幅設定
+            ws['!cols'] = [
+                { wch: 20 },
+                { wch: 40 },
+                { wch: 50 },
+                { wch: 15 },
+                { wch: 15 }
+            ];
+            
+            XLSX.utils.book_append_sheet(wb, ws, 'ヒアリングシート');
+            
+            // ファイル名生成（日付付き）
+            const date = new Date();
+            const dateStr = date.getFullYear() + 
+                          ('0' + (date.getMonth() + 1)).slice(-2) + 
+                          ('0' + date.getDate()).slice(-2);
+            const fileName = 'IT_AI活用ヒアリングシート_' + dateStr + '.xlsx';
+            
+            // ダウンロード
+            XLSX.writeFile(wb, fileName);
+        }
+
+        function printSheet() {
+            window.print();
+        }
+    </script>
+
+    <style media="print">
+        .download-section {
+            display: none;
+        }
+        body {
+            background: white;
+            padding: 0;
+        }
+        .container {
+            box-shadow: none;
+        }
+    </style>
+</body>
+</html>
